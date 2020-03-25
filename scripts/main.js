@@ -2,6 +2,7 @@
 let oCanvas = document.getElementById("canvas");
 
 let bRunning = false;
+let bAging = true;
 
 var oField = new Field(100, 100, oCanvas);
 
@@ -29,66 +30,6 @@ function regenerate() {
     }
     oField.draw();
 }
-
-
-
-// oField.aField[30][20] = 1;
-// oField.aField[29][20] = 1;
-// oField.aField[31][20] = 1;
-// oField.aField[31][21] = 1;
-// oField.aField[31][22] = 1;
-// oField.aField[29][21] = 1;
-// oField.aField[29][22] = 1;
-
-// oField.aField[31][24] = 1;
-// oField.aField[31][25] = 1;
-// oField.aField[29][24] = 1;
-// oField.aField[29][25] = 1;
-// oField.aField[29][26] = 1;
-// oField.aField[30][26] = 1;
-// oField.aField[31][26] = 1;
-
-// oField.aField[30][40] = 1;
-// oField.aField[29][40] = 1;
-// oField.aField[31][40] = 1;
-// oField.aField[31][41] = 1;
-// oField.aField[31][42] = 1;
-// oField.aField[29][41] = 1;
-// oField.aField[29][42] = 1;
-
-// oField.aField[31][44] = 1;
-// oField.aField[31][45] = 1;
-// oField.aField[29][44] = 1;
-// oField.aField[29][45] = 1;
-// oField.aField[29][46] = 1;
-// oField.aField[30][46] = 1;
-// oField.aField[31][46] = 1;
-
-
-// oField.aField[40][40] = 1;
-// oField.aField[39][40] = 1;
-// oField.aField[41][40] = 1;
-// oField.aField[41][41] = 1;
-// oField.aField[41][42] = 1;
-// oField.aField[39][41] = 1;
-// oField.aField[39][42] = 1;
-
-// oField.aField[41][44] = 1;
-// oField.aField[41][45] = 1;
-// oField.aField[39][44] = 1;
-// oField.aField[39][45] = 1;
-// oField.aField[39][46] = 1;
-// oField.aField[40][46] = 1;
-// oField.aField[41][46] = 1;
-
-
-// oField.aField[70][70] = 1;
-// oField.aField[71][68] = 1;
-// oField.aField[70][69] = 1;
-// oField.aField[69][69] = 1;
-
-// oField.aField[70][68] = 1;
-
 
 function evaluateGeneration() {
         oField.draw();
@@ -137,35 +78,51 @@ function Field(nWidth, nHeight, oCanvas) {
             let aNeighbours = [];
             try {
                 aNeighbours.push(this.aField[nI - 1][nJ - 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI - 1][nJ]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI - 1][nJ + 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI][nJ - 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI][nJ + 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI + 1][nJ - 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI + 1][nJ]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             try {
                 aNeighbours.push(this.aField[nI + 1][nJ + 1]);
-            } catch (err) {}
+            } catch (err) {
+                aNeighbours.push(0);
+            }
             return aNeighbours;
         }
 
         let liveCount = (aNeighbours) => {
             let nCount = 0;
             aNeighbours.forEach(oElement => {
-                if (oElement == 1) {
+                if (oElement > 0) {
                     nCount++;
                 } 
             });
@@ -186,6 +143,11 @@ function Field(nWidth, nHeight, oCanvas) {
                         aNewField[i][j] = 0;
                     } else if(nCount > 3) {
                         aNewField[i][j] = 0;
+                    } else if(bAging) {
+                        aNewField[i][j] += 1;
+                        if (aNewField[i][j] > 25) {
+                            aNewField[i][j] = 0;
+                        }
                     }
                 }
             }
@@ -201,7 +163,7 @@ function Field(nWidth, nHeight, oCanvas) {
             let aRow = this.aField[i];
             for (let j=0; j<this.nWidth; j++) {
                 if (aRow[j]) {
-                    this.oContext.fillStyle = "black";
+                    this.oContext.fillStyle = "rgb(" + aRow[j] * 10 + ", 0, 0)";
                     this.oContext.fillRect(i * 6, j * 6, 6, 6);
                 }
             }
