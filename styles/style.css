@@ -1,0 +1,74 @@
+html {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #fefefe;
+    overflow:hidden;
+    padding: 0;
+    margin: 0;
+}
+
+#canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-color: lightgray;
+}
+
+button {
+    padding: 0.5rem 2rem;
+    font-size: 18pt;
+    cursor: pointer;
+    border-style: solid;
+    color: #f8f8f8;
+    background-color: #6ba6ff;
+    transition: 0.1s;
+    border-width: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+button:active {
+    background-color: #f0f0f0;
+}
+
+button:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+#runner {
+    border-bottom-right-radius: 0.7rem;
+    margin-left: -4px;
+}
+
+a {
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    font-size: 18pt;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border-radius: 50%;
+    background-color: #6ba6ff;
+    color: #f8f8f8;
+    height: 2.5rem;
+    width: 2.5rem;
+    text-align: center;
+    line-height: 2.5rem;
+    text-decoration: none;
+    vertical-align: center;
+    transition: 0.1s;
+
+}
+
+a:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
