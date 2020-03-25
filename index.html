@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conway's Game of Life 😍</title>
+    <title>Conway's Game of Life 🤓</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body >
-    <button onclick="regenerate()" title="Bad start... try again 😒">Retry</button>
+    <div class="control-container">
+    <button id="retry" onclick="regenerate()" title="Bad start... try again 😒"> Retry</button>
     <button id="runner" onclick="bRunning = !bRunning" title="Start / Stop the Evolution 😉">Start / Stop</button><br>
-    <a href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens">?</a>
+    <label class="container" title="The entitys dies after several moments by aging 😢">👨‍🦳 Entity aging 
+        <input type="checkbox" checked="true" onchange="bAging = this.checked">
+        <span class="checkmark"></span>
+    </label>
+    </div>
+    <a href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
     <canvas id="canvas"  height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
     <script src="scripts/main.js"></script>
 </body>
