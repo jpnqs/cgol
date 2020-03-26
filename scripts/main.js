@@ -3,6 +3,7 @@ let oCanvas = document.getElementById("canvas");
 
 let bRunning = false;
 let bAging = true;
+let bWaitDuration = 100;
 
 var oField = new Field(100, 100, oCanvas);
 
@@ -38,12 +39,23 @@ function evaluateGeneration() {
 
 evaluateGeneration();
 
-setInterval(function() {
+
+function worker() {
     if (bRunning) {
         evaluateGeneration();
     }
-}, 100);
+    setTimeout(function() {
+        worker()
+    }, bWaitDuration);
+}
 
+worker()
+
+let oTimeOut = document.getElementById("ms-out");
+function timeChange(val) {
+    bWaitDuration = parseInt(val);
+    oTimeOut.innerText = val;
+}
 
 function Field(nWidth, nHeight, oCanvas) {
 
