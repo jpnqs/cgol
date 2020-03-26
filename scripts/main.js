@@ -1,9 +1,10 @@
 
 let oCanvas = document.getElementById("canvas");
-
+let oGen = document.getElementById("generation");
 let bRunning = false;
 let bAging = true;
 let bWaitDuration = 100;
+let nGeneration = 0;
 
 var oField = new Field(100, 100, oCanvas);
 
@@ -17,6 +18,8 @@ for (let i=0;i<oField.aField.length;i++) {
 }
 
 function regenerate() {
+    nGeneration = 0;
+    updateGen();
     bRunning = false;
 
     oField = new Field(100, 100, oCanvas);
@@ -38,10 +41,17 @@ function evaluateGeneration() {
 }
 
 evaluateGeneration();
+updateGen();
 
+
+function updateGen() {
+    oGen.innerText = nGeneration;
+}
 
 function worker() {
     if (bRunning) {
+        nGeneration++;
+        updateGen();
         evaluateGeneration();
     }
     setTimeout(function() {
