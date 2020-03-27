@@ -24,6 +24,13 @@
           <span>👶 Generation: </span>
           <span id="generation"></span>
       </div>
+      <div id="drawing-tools">
+        <span>🎨 Drawing</span><br>
+        <button id="pen" class="draw-button draw-button-active" onclick="penActive()">Pen</button>
+        <button id="eraser" class="draw-button" onclick="eraserActive()">Eraser</button>
+        <button class="draw-button" onclick="clearCanvas()">Clear</button>
+
+      </div>
     </div>
     <a href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
     <canvas id="canvas"  height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
