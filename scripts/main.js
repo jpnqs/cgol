@@ -2,6 +2,7 @@
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
 let bRunning = false;
+let b
 let bAging = true;
 let bWaitDuration = 100;
 let nGeneration = 0;
@@ -35,8 +36,10 @@ function eraserActive() {
 }
 
 oCanvas.addEventListener("click", oEvent => {
-    let x = Math.floor( oEvent.offsetX / 6 );
-    let y = Math.floor( oEvent.offsetY / 6 );
+    let width = getComputedStyle(oCanvas).width;
+    let div = width.substring(0, width.length - 2) / 100;
+    let x = Math.floor( oEvent.offsetX / div );
+    let y = Math.floor( oEvent.offsetY / div );
     try {
         if (bDraw) {
             oField.aField[x][y] = 1;
@@ -49,6 +52,7 @@ oCanvas.addEventListener("click", oEvent => {
 });
 
 oCanvas.addEventListener("mousedown", () => {
+    bRunning = false;
     bMouseDown = true
 });
 oCanvas.addEventListener("mouseup", () => {
@@ -56,9 +60,11 @@ oCanvas.addEventListener("mouseup", () => {
 });
 
 oCanvas.addEventListener("mousemove", (oEvent) => {
+    let width = getComputedStyle(oCanvas).width;
+    let div = width.substring(0, width.length - 2) / 100;
     if (bMouseDown) {
-        let x = Math.floor( oEvent.offsetX / 6 );
-        let y = Math.floor( oEvent.offsetY / 6 );
+        let x = Math.floor( oEvent.offsetX / div );
+        let y = Math.floor( oEvent.offsetY / div );
         try {
             if (bDraw) {
                 oField.aField[x][y] = 1;
