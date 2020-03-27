@@ -6,6 +6,8 @@ let bAging = true;
 let bWaitDuration = 100;
 let nGeneration = 0;
 
+let bDraw = true;
+let bMouseDown = false;
 var oField = new Field(100, 100, oCanvas);
 
 for (let i=0;i<oField.aField.length;i++) {
@@ -16,6 +18,58 @@ for (let i=0;i<oField.aField.length;i++) {
         }
     }
 }
+
+let oEraser = document.getElementById("eraser");
+let oPen = document.getElementById("pen");
+
+function penActive() {
+    oEraser.classList.remove("draw-button-active");
+    oPen.classList.add("draw-button-active");
+    bDraw = true
+}
+
+function eraserActive() {
+    oPen.classList.remove("draw-button-active");
+    oEraser.classList.add("draw-button-active");
+    bDraw = false
+}
+
+oCanvas.addEventListener("click", oEvent => {
+    let x = Math.floor( oEvent.offsetX / 6 );
+    let y = Math.floor( oEvent.offsetY / 6 );
+    try {
+        if (bDraw) {
+            oField.aField[x][y] = 1;
+        } else {
+            oField.aField[x][y] = 0;
+        }
+    oField.draw();
+
+    } catch (err) {}
+});
+
+oCanvas.addEventListener("mousedown", () => {
+    bMouseDown = true
+});
+oCanvas.addEventListener("mouseup", () => {
+    bMouseDown = false
+});
+
+oCanvas.addEventListener("mousemove", (oEvent) => {
+    if (bMouseDown) {
+        let x = Math.floor( oEvent.offsetX / 6 );
+        let y = Math.floor( oEvent.offsetY / 6 );
+        try {
+            if (bDraw) {
+                oField.aField[x][y] = 1;
+            } else {
+                oField.aField[x][y] = 0;
+            }
+        oField.draw();
+    
+        } catch (err) {}
+    }
+});
 
 function regenerate() {
     nGeneration = 0;
@@ -33,6 +87,19 @@ function regenerate() {
         }
     }
     oField.draw();
+}
+
+function clearCanvas() {
+    for (let i=0;i<oField.aField.length;i++) {
+        let aRow = oField.aField[i];
+        for (let j=0;j<aRow.length;j++) {
+            oField.aField[i][j] = 0;
+        }
+    }
+    oField.draw();
+    bRunning = false;
+    nGeneration = 0;
+    updateGen();
 }
 
 function evaluateGeneration() {
