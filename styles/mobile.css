@@ -161,7 +161,11 @@
       .container input:checked ~ .checkmark:after {
         display: block;
       }
-      
+
+      #drawing-tools {
+        display:none;
+      }
+
       /* Style the checkmark/indicator */
       .container .checkmark:after {
         left: 9px;
