@@ -58,6 +58,23 @@ oCanvas.addEventListener("mousedown", () => {
 oCanvas.addEventListener("mouseup", () => {
     bMouseDown = false
 });
+oCanvas.addEventListener("touchstart", () => {
+    var mouseEvent = new MouseEvent("mousedown", {});
+    oCanvas.dispatchEvent(mouseEvent);
+});
+oCanvas.addEventListener("touchend", () => {
+    var mouseEvent = new MouseEvent("mouseup", {});
+    oCanvas.dispatchEvent(mouseEvent);
+})
+
+oCanvas.addEventListener("touchmove", (oEvent) => {
+    var touch = oEvent.touches[0];
+    var mouseEvent = new MouseEvent("mousemove", {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+})
 
 oCanvas.addEventListener("mousemove", (oEvent) => {
     let width = getComputedStyle(oCanvas).width;
