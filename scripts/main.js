@@ -2,6 +2,7 @@
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
 let bRunning = false;
+let bRunningSave = false;
 let bAging = true;
 let bWaitDuration = 100;
 let nAutoRetry = 1000;
@@ -55,11 +56,13 @@ oCanvas.addEventListener("click", oEvent => {
 });
 
 oCanvas.addEventListener("mousedown", () => {
+    bRunningSave = bRunning;
     bRunning = false;
     bMouseDown = true
 });
 oCanvas.addEventListener("mouseup", () => {
     bMouseDown = false
+    bRunning = bRunningSave;
 });
 oCanvas.addEventListener("touchstart", () => {
     var mouseEvent = new MouseEvent("mousedown", {});
