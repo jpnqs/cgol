@@ -183,9 +183,9 @@ transition: 0.1s;
 
 .control-container {
     background-color: #f0f0f0;
+    overflow-y: auto;
     width: 18.97rem;
-    height: 30rem;
-    border-bottom-right-radius: 0.7rem;
+    height: 100%;
     border-style: solid;
     border-color: lightgray;
     border-left: none;
@@ -240,13 +240,13 @@ transition: 0.1s;
     margin: auto;
 }
 
-#ms-out {
+#ms-out, #prob-out {
   margin-left: 8.5rem;
   margin-right: 0.4rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-#delay {
+#delay, #generation-t {
   font-size: 16pt;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   margin-left: 0.85rem;
@@ -264,6 +264,17 @@ span {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16pt;
   margin-left: 0.9rem;
+}
+
+#auto-retry {
+  font-size: 16pt;
+    margin-left: 3.25rem;
+    width: 6rem;
+}
+
+#auto-retry-text {
+  font-size: 16pt;
+  margin-left: 0.5rem;
 }
 
 }

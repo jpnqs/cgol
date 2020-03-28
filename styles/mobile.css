@@ -183,6 +183,7 @@
         background-color: #f0f0f0;
         width: calc( 100% );
         height: 100%;
+        overflow-y: auto;
         /* border-bottom-right-radius: 0.7rem; */
         border-style: solid;
         border-color: #f0f0f0;
@@ -253,5 +254,20 @@
       margin-left: 0.9rem;
     }
     
+    #auto-retry {
+      display:none;
+    }
+    
+    #auto-retry-text {
+      display:none;
+      
+    }
 
+    #auto-retry-check {
+      display: none;
+    }
+
+    .no-mobile {
+      display:none;
+    }
 }

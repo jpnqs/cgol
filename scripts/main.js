@@ -2,19 +2,22 @@
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
 let bRunning = false;
-let b
 let bAging = true;
 let bWaitDuration = 100;
+let nAutoRetry = 1000;
 let nGeneration = 0;
+let bAutoRetry = false;
+let nGenerationPercentage = 31;
 
 let bDraw = true;
 let bMouseDown = false;
 var oField = new Field(100, 100, oCanvas);
+let oProbOut = document.getElementById("prob-out");
 
 for (let i=0;i<oField.aField.length;i++) {
     let aRow = oField.aField[i];
     for (let j=0;j<aRow.length;j++) {
-        if (Math.floor(Math.random() * 101) < 32) {
+        if (Math.floor(Math.random() * 101) < nGenerationPercentage) {
             oField.aField[i][j] = 1;
         }
     }
@@ -94,6 +97,14 @@ oCanvas.addEventListener("mousemove", (oEvent) => {
     }
 });
 
+function probability(val) {
+    nGenerationPercentage = val;
+    oProbOut.innerText = val;
+    if (!bRunning) {
+        regenerate();
+    }
+} 
+
 function regenerate() {
     nGeneration = 0;
     updateGen();
@@ -104,7 +115,7 @@ function regenerate() {
     for (let i=0;i<oField.aField.length;i++) {
         let aRow = oField.aField[i];
         for (let j=0;j<aRow.length;j++) {
-            if (Math.floor(Math.random() * 101) < 32) {
+            if (Math.floor(Math.random() * 101) < nGenerationPercentage) {
                 oField.aField[i][j] = 1;
             }
         }
@@ -139,6 +150,12 @@ function updateGen() {
 }
 
 function worker() {
+    if (bAutoRetry) {
+        if (nGeneration > nAutoRetry) {
+            regenerate();
+            bRunning = true;
+        }
+    }
     if (bRunning) {
         nGeneration++;
         updateGen();

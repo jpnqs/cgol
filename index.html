@@ -15,25 +15,41 @@
         <input type="checkbox" checked="true" onchange="bAging = this.checked">
         <span class="checkmark"></span>
     </label>
+        <label id="auto-retry-check" class="container" title="The entitys dies after several moments by aging 😢">🔄 Auto retry after
+          <input type="checkbox" onchange="bAutoRetry = this.checked">
+          <span class="checkmark"></span>
+      </label>
+      <input id="auto-retry" type="number" oninput="nAutoRetry = this.value" value="1000"><span id="auto-retry-text">Generations</span>
     <div id="delay">⏰ Evolution delay:</div>
     <div class="slidecontainer">
         <input type="range" min="10" max="400" value="100" class="slider" id="wait-dur" oninput="timeChange(this.value)">
       </div>
       <span id="ms-out">100</span><span>ms</span>
-      <div id="gen-out">
-          <span>👶 Generation: </span>
-          <span id="generation"></span>
-      </div>
+
+
+
+
+      <div class="no-mobile">
+
+        <div id="generation-t">🧐 Generate probability:</div>
+          <div class="slidecontainer">
+            <input type="range" min="1" max="99" value="31" class="slider" oninput="probability(this.value)">
+          </div>
+          <span id="prob-out">31</span><span>%</span>
+    </div>
+    <div id="gen-out">
+        <span>👶 Generation: </span>
+        <span id="generation"></span>
+    </div>
       <div id="drawing-tools">
         <span>🎨 Drawing</span><br>
         <button id="pen" class="draw-button draw-button-active" onclick="penActive()">Pen</button>
         <button id="eraser" class="draw-button" onclick="eraserActive()">Eraser</button>
         <button class="draw-button" onclick="clearCanvas()">Clear</button>
-
       </div>
     </div>
     <a href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
-    <canvas id="canvas"  height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
+    <canvas id="canvas" height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
     <script src="scripts/main.js"></script>
 </body>
 </html>
