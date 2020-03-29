@@ -1,4 +1,7 @@
-
+if (!Boolean(window.HTMLCanvasElement)) {
+    alert("Your'e browser does not support this application!");
+    throw new Error("No canvas support");
+}
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
 let bRunning = false;
@@ -95,6 +98,16 @@ oCanvas.addEventListener("mousemove", (oEvent) => {
                 oField.aField[x][y] = 0;
             }
         oField.draw();
+    
+        } catch (err) {}
+    } else {
+        let x = Math.floor( oEvent.offsetX / div );
+        let y = Math.floor( oEvent.offsetY / div );
+        try {
+            oField.draw();
+                oField.oContext.fillStyle = "gray";
+                oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+        // 
     
         } catch (err) {}
     }
