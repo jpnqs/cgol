@@ -42,9 +42,16 @@
         <button id="pen" class="draw-button draw-button-active" onclick="penActive()">Pen</button>
         <button id="eraser" class="draw-button" onclick="eraserActive()">Eraser</button>
         <button class="draw-button" onclick="clearCanvas()">Clear</button>
+
+        <button class="full-length" onclick="erosion()">Erosion</button>
+        <button class="full-length" onclick="oField.dilatation()">Dilatation</button>
+        <button class="full-length" onclick="findEdges()">Find edges</button>
+
       </div>
     </div>
-    <a href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
+    <a class="a" href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
+    <a id="download" href="" download="cgol_img.png" class="full-length" onclick="exportImage(this)">download current image</a>
+
     <canvas id="canvas" height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
     <script src="scripts/main.js"></script>
 </body>

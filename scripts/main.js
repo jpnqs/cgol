@@ -30,6 +30,12 @@ for (let i=0;i<oField.aField.length;i++) {
 let oEraser = document.getElementById("eraser");
 let oPen = document.getElementById("pen");
 
+function exportImage(el) {
+    let data = oCanvas.toDataURL("image/jpg");
+el.href = data;
+
+}
+
 function penActive() {
     oEraser.classList.remove("draw-button-active");
     oPen.classList.add("draw-button-active");
@@ -190,6 +196,42 @@ function timeChange(val) {
     oTimeOut.innerText = val;
 }
 
+function erosion() {
+    
+    oField.aField = oField.erosion();
+
+    oField.draw();
+}
+
+function findEdges() {
+
+    let aNewField = [];
+    for (let i=0; i<oField.nHeight; i++) {
+        let aRow = oField.aField[i];
+        let aNewRow = [];
+        for (let j=0; j<oField.nWidth; j++) {
+            aNewRow.push(aRow[j]);
+        }
+        aNewField.push(aNewRow);
+    }
+
+    let aErosion = oField.erosion();
+
+    for (let i=0; i<oField.nHeight; i++) {
+        for (let j=0; j<oField.nWidth; j++) {
+            let before = oField.aField[i][j];
+            let after = aErosion[i][j];
+            if (before == after) {
+                aNewField[i][j] = 0;
+            } 
+        }
+
+    }
+    oField.aField = aNewField
+
+    oField.draw();
+}
+
 function Field(nWidth, nHeight, oCanvas) {
 
     this.nWidth = nWidth;
@@ -205,6 +247,121 @@ function Field(nWidth, nHeight, oCanvas) {
         }
         this.aField.push(aRow);
     }
+
+    this.getNeighbours = (nI, nJ) => {
+        let aNeighbours = [];
+        try {
+            aNeighbours.push(this.aField[nI - 1][nJ - 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI - 1][nJ]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI - 1][nJ + 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI][nJ - 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI][nJ + 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI + 1][nJ - 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI + 1][nJ]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        try {
+            aNeighbours.push(this.aField[nI + 1][nJ + 1]);
+        } catch (err) {
+            aNeighbours.push(0);
+        }
+        return aNeighbours;
+    }
+
+    this.erosion = function() {
+        let aNewField = [];
+        for (let i=0; i<this.nHeight; i++) {
+            let aRow = this.aField[i];
+            let aNewRow = [];
+            for (let j=0; j<this.nWidth; j++) {
+                aNewRow.push(aRow[j]);
+            }
+            aNewField.push(aNewRow);
+        }
+
+        for (let i=0; i<this.nHeight; i++) {
+            let aRow = this.aField[i];
+            for (let j=0; j<this.nWidth; j++) {
+                let aNeighbours = this.getNeighbours(i, j);
+                let v = this.aField[i][j];
+                if (v > 0) {
+                    let ok = false;
+                    // any neigbour white?
+                    aNeighbours.forEach(el => {
+                        if (el == 0) {
+                            ok = true;
+                            return;
+                        }
+                    });
+                    if (ok) {
+                        aNewField[i][j] = 0;
+                    }
+                }
+            }
+        }
+       return aNewField;
+    }
+
+    this.dilatation = function() {
+        let aNewField = [];
+        for (let i=0; i<this.nHeight; i++) {
+            let aRow = this.aField[i];
+            let aNewRow = [];
+            for (let j=0; j<this.nWidth; j++) {
+                aNewRow.push(aRow[j]);
+            }
+            aNewField.push(aNewRow);
+        }
+
+        for (let i=0; i<this.nHeight; i++) {
+            let aRow = this.aField[i];
+            for (let j=0; j<this.nWidth; j++) {
+                let aNeighbours = this.getNeighbours(i, j);
+                let v = this.aField[i][j];
+                if (v == 0) {
+                    let ok = false;
+                    // any neigbour white?
+                    aNeighbours.forEach(el => {
+                        if (el > 0) {
+                            ok = true;
+                            return;
+                        }
+                    });
+                    if (ok) {
+                        aNewField[i][j] = 1;
+                    }
+                }
+            }
+        }
+        this.aField = aNewField;
+        this.draw();
+    }
+
 
     this.evaluate = function() {
         let aNewField = [];
