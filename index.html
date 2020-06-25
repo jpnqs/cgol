@@ -4,55 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conway's Game of Life 🤓</title>
-    <link rel="stylesheet" href="styles/mobile.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="styles/mobile.css"> -->
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body >
     <div class="control-container">
-    <button id="retry" onclick="regenerate()" title="Bad start... try again 😒"> Retry</button>
-    <button id="runner" onclick="bRunning = !bRunning" title="Start / Stop the Evolution 😉">Start / Stop</button><br>
-    <label class="container" title="The entitys dies after several moments by aging 😢">👨‍🦳 Entity aging 
+    <button id="retry" onclick="regenerate()" title="regenerate field"> <i class="material-icons" style="font-size: 22pt; margin-top:0.4rem">settings_backup_restore</i> </button>
+    <button id="runner" onclick="startStop()" title="start/stop the evolution"><i id="play" class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">play_circle_outline</i> </button><br>
+    <label class="container" title="The entities dies after several moments by aging">Entity aging 
         <input type="checkbox" checked="true" onchange="bAging = this.checked">
         <span class="checkmark"></span>
     </label>
-        <label id="auto-retry-check" class="container" title="The entitys dies after several moments by aging 😢">🔄 Auto retry after
+        <label id="auto-retry-check" class="container" >Auto retry after
           <input type="checkbox" onchange="bAutoRetry = this.checked">
           <span class="checkmark"></span>
       </label>
-      <input id="auto-retry" type="number" oninput="nAutoRetry = this.value" value="1000"><span id="auto-retry-text">Generations</span>
-    <div id="delay">⏰ Evolution delay:</div>
+      <input id="auto-retry" type="number" oninput="nAutoRetry = this.value" value="500"><span id="auto-retry-text">Generations</span>
+    <div id="delay">Evolution delay:</div>
     <div class="slidecontainer">
         <input type="range" min="10" max="400" value="100" class="slider" id="wait-dur" oninput="timeChange(this.value)">
       </div>
       <span id="ms-out">100</span><span>ms</span>
       <div class="no-mobile">
 
-        <div id="generation-t">🧐 Generate probability:</div>
+        <div id="generation-t">Generate probability:</div>
           <div class="slidecontainer">
             <input type="range" min="1" max="99" value="31" class="slider" oninput="probability(this.value)">
           </div>
           <span id="prob-out">31</span><span>%</span>
     </div>
     <div id="gen-out">
-        <span>👶 Generation: </span>
+        <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
+          child_care
+          </span>
+          
+           Generation: </span>
         <span id="generation"></span>
     </div>
       <div id="drawing-tools">
-        <span>🎨 Drawing</span><br>
-        <button id="pen" class="draw-button draw-button-active" onclick="penActive()">Pen</button>
-        <button id="eraser" class="draw-button" onclick="eraserActive()">Eraser</button>
-        <button class="draw-button" onclick="clearCanvas()">Clear</button>
+        <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
+          color_lens
+          </span> Drawing</span>
+          <button class="expand" onclick="hideDrawing()"><span id="drawing-expand" class="material-icons">
+            expand_less
+            </span>
+
+          </button><br>
+          <div id="drawing-content" class="section-content">
+        <button class="tool" id="pen" class="draw-button draw-button-active" onclick="onclick="activateTool(this, 'pen')><span class="material-icons">
+          brush
+          </span></button>
+        <button  class="tool" id="eraser" class="draw-button" onclick="eraserActive()"><span class="material-icons">
+          crop_portrait
+          </span></button>
+        <button class="draw-button" onclick="clearCanvas()"><span class="material-icons">
+          delete_outline
+          </span>
+          
+          </button>
 
         <button class="full-length" onclick="erosion()">Erosion</button>
         <button class="full-length" onclick="oField.dilatation()">Dilatation</button>
         <button class="full-length" onclick="findEdges()">Find edges</button>
 
+        </div>
       </div>
-    </div>
-    <a class="a" href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" title="What is Conway's Game of Life? 😬">❔</a>
-    <a id="download" href="" download="cgol_img.png" class="full-length" onclick="exportImage(this)">download current image</a>
 
-    <canvas id="canvas" height="600px" width="600px" title="Field of 100 x 100 entitys 😮"></canvas>
+      <div id="template-tools">
+        <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
+          extension
+          </span> Templates</span><br>
+         <div class="section-content">
+          <button class="full-length tool" onclick="activateTool(this, 'G1')">Glider</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G2')">Light glider</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G3')">Medium glider</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G4')">Heavy glider</button>
+
+
+
+        </div>
+      </div>
+      <div id="import_export-tools">
+        <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
+          import_export
+          </span> Import/Export</span><br>
+         <div class="section-content">
+
+            <a href="" download="data.cgol" style="vertical-align: middle; margin-top: 0.5rem;"  class="link-button full-length" onclick="exportFile(this)"><span class="material-icons" style="vertical-align: sub; margin-right: 0.5rem">
+              get_app
+              </span>Export</a>
+        <button class="full-length" onclick="uploadAndApplyFile()"><span style="vertical-align: sub; margin-right: 0.5rem" class="material-icons">
+          publish
+          </span>Import</button>
+          
+        <a href="" download="cgol_img.png" style="vertical-align: middle;"  class="link-button full-length" onclick="exportImage(this)"><span class="material-icons" style="vertical-align: sub; margin-right: 0.5rem">
+          wallpaper
+          </span>Screenshot</a>
+        </div>
+      </div>
+      <br>
+    </div>
+    <div id="canvasContainer">
+      <canvas id="canvas" height="600px" width="600px" style="height: 80%"></canvas>
+        <a class="a" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" title="What is Conway's Game of Life?"><span style="font-size: 24pt;margin-top: 0.25rem;" class="material-icons">
+          help_outline
+          </span></a>
+          <!-- <a class="a" href="https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens" style="margin-right: 6rem;" title="What is Conway's Game of Life?"><span style="font-size: 24pt;margin-top: 0.25rem;" class="material-icons">
+            keyboard_arrow_left
+            </span></a> -->
+          <a class="a" id="openFullScreen" onclick="openFullscreen()" style="margin-right: 3rem;" title="Fullscreen"><span style="font-size: 20pt;margin-top: 0.45rem;" class="material-icons">
+            open_in_full
+
+            </span></a>
+    </div>
     <script src="scripts/main.js"></script>
 </body>
 </html>

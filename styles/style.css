@@ -1,9 +1,36 @@
-@media only screen
-  and (orientation: landscape) {
+:root {
+  --color: rgb(190, 0, 0);
+}
+
+
+/* @media only screen
+  and (orientation: landscape) { */
     
     .full-length {
       width: calc( 100% - 1rem );
     }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #00000000; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #242a2c; 
+  border-radius: 10px;
+
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #323a3d; 
+}
 
 html {
     padding: 0;
@@ -18,7 +45,7 @@ html {
 body {
     width: 100%;
     height: 100%;
-    background-color: #fefefe;
+    background-color: #242a2c;
     overflow:hidden;
     padding: 0;
     margin: 0;
@@ -32,13 +59,21 @@ body {
   width:fit-content
 }
 
+#canvasContainer {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 100%;
+  width:  calc(100% - 18.97rem);
+}
+
 #canvas {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-style: solid;
-    border-color: lightgray;
+    border-color: #191d1f;
     max-width: 100%;
     max-height: 100%;
     height: auto;
@@ -46,14 +81,24 @@ body {
     cursor: pointer;
 }
 
-#drawing-tools {
+#drawing-tools, #import_export-tools, #template-tools {
   margin-top: 0.8rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16pt;
   margin-left: 0.9rem;
 }
 
-button {
+.link-button {
+  display:block;
+  text-align: center;
+}
+
+.section-content {
+  transition: 1s;
+  overflow: hidden;
+}
+
+button, .link-button {
   text-decoration: none;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -61,22 +106,23 @@ button {
     cursor: pointer;
     border-style: solid;
     color: #f8f8f8;
-    background-color: #6ba6ff;
+    background-color: #0f1113;
     transition: 0.1s;
     border-width: 0px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-
+  outline: none;
 }
 
-button:active {
-    background-color: #f0f0f0;
-}
 
-button:hover {
+button:hover, .link-button:hover {
     background-color: #f0f0f0;
     color: #333;
 }
 
+button:active, .link-button:active {
+  color: #f8f8f8;
+  background-color: var(--color);
+}
 #runner {
     /* border-bottom-right-radius: 0.7rem; */
     margin-left: -4px;
@@ -86,7 +132,7 @@ button:hover {
 #retry {
     border-right-style: solid;
     border-right-width: 0.1rem;
-    border-right-color: #7bb0ff;
+    border-right-color: #0f1113;
     width: 40%;
 }
 
@@ -97,7 +143,7 @@ button:hover {
     font-size: 16pt;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     border-radius: 50%;
-    background-color: #6ba6ff;
+    background-color: #0f1113;
     color: #f8f8f8;
     height: 2.5rem;
     width: 2.5rem;
@@ -148,7 +194,7 @@ a:hover {
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: rgb(202, 202, 202);
+    background-color: #2d3436;
     margin-top: 0.25rem;
 transition: 0.1s;
   }
@@ -157,12 +203,12 @@ transition: 0.1s;
   .container:hover input ~ .checkmark {
     margin-top: 0.25rem;
 
-    background-color: rgb(177, 177, 177);
+    background-color: #242a2c;
   }
   
   /* When the checkbox is checked, add a blue background */
   .container input:checked ~ .checkmark {
-    background-color: #6ba6ff;
+    background-color: var(--color);
     margin-top: 0.25rem;
 transition: 0.1s;
 
@@ -194,12 +240,13 @@ transition: 0.1s;
   }
 
 .control-container {
-    background-color: #f0f0f0;
-    overflow-y: auto;
+    color: #f8f8f8;
+    background-color: #191d1f;
+    overflow-y: scroll;
     width: 18.97rem;
     height: 100%;
     border-style: solid;
-    border-color: lightgray;
+    border-color: #00000000;
     border-left: none;
     border-top: none;
 }
@@ -212,7 +259,7 @@ transition: 0.1s;
 }
 
 .draw-button-active {
-  background-color: #408cff;
+  background-color: var(--color);
 }
 
 .slider {
@@ -220,7 +267,7 @@ transition: 0.1s;
   width: 100%;
   height: 15px;
   border-radius: 5px;  
-  background: #d3d3d3;
+  background: #2d3436;
   outline: none;
   /* opacity: 0.7; */
   -webkit-transition: .2s;
@@ -234,18 +281,23 @@ transition: 0.1s;
   width: 25px;
   height: 25px;
   border-radius: 50%; 
-  background: #6ba6ff;
+  background: var(--color);
   cursor: pointer;
   
+}
+
+#drawing-content {
+  height: 13rem;
 }
 
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #6ba6ff;
+  background: rgb(190, 0, 0);
   cursor: pointer;
 }
+
 
 .slidecontainer {
   width: 80%;
@@ -282,6 +334,9 @@ span {
   font-size: 16pt;
     margin-left: 3.25rem;
     width: 6rem;
+    background-color: #0f1113;
+    color: #f8f8f8;
+    border: 1px solid #0b0c0e;
 }
 
 #auto-retry-text {
@@ -289,4 +344,31 @@ span {
   margin-left: 0.5rem;
 }
 
+/* } */
+
+#drawing-expand {
+  
+}
+
+.expand {
+  margin-left: 7.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #00000000;
+  transition: 0.3s;
+}
+
+.expand:hover {
+  color: white;
+  background-color: rgba(0,0,0,.25);
+}
+
+.expand:hover {
+  background-color: rgba(0,0,0,.5);
+
+}
+
+.expand > span {
+  display:block;
+  
 }

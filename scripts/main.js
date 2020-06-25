@@ -8,7 +8,7 @@ let bRunning = false;
 let bRunningSave = false;
 let bAging = true;
 let bWaitDuration = 100;
-let nAutoRetry = 1000;
+let nAutoRetry = 500;
 let nGeneration = 0;
 let bAutoRetry = false;
 let nGenerationPercentage = 31;
@@ -32,9 +32,97 @@ let oPen = document.getElementById("pen");
 
 function exportImage(el) {
     let data = oCanvas.toDataURL("image/jpg");
-el.href = data;
+    el.href = data;
+}
+
+function exportFile(el) {
+    el.href = "data:application/octet-stream," + oField.createExportData();
+}
+
+document.onkeypress = function(ev) {
+    if (ev.code == "Space") {
+        $("#runner").click()
+    }
+    else if (ev.code == "KeyF") {
+        if((window.fullScreen) ||
+            (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+
+                exitFullscreen()
+            } else {
+                openFullscreen()
+        }
+
+    }
+}
+
+
+function uploadAndApplyFile() {
+    let inp = document.createElement("input");
+    inp.type = "file";
+    inp.accept = ".cgol";
+    inp.style.display = "none";
+    inp.addEventListener("change", (ev) => {
+        let file = ev.srcElement.files[0];
+        let fr = new FileReader();
+        fr.addEventListener("load", event => {
+            oField.loadExportedData(event.srcElement.result);
+        });
+        fr.readAsText(file);
+    })
+    document.body.appendChild(inp);
+    $(inp).click();
+    
+}
+
+function activateTool(el, tool) {
 
 }
+
+function hideDrawing() {
+    let cont = document.getElementById("drawing-content");
+
+    if (!window.drawingContentOpen) {
+        window.drawingContentOpen = true; 
+        $("#drawing-expand").text("expand_more")
+
+            $("#drawing-content").animate({
+                height: "0px"
+            }, 50)
+
+    } else {
+        window.drawingContentOpen = false;
+        // cont.style.display = "block";
+        $("#drawing-expand").text("expand_less")
+        $("#drawing-content").animate({
+            height: "13rem"
+        }, 50)
+
+    }
+
+}
+
+function openFullscreen() {
+    if (oCanvas.requestFullscreen) {
+        oCanvas.requestFullscreen();
+    } else if (oCanvas.mozRequestFullScreen) { /* Firefox */
+        oCanvas.mozRequestFullScreen();
+    } else if (oCanvas.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        oCanvas.webkitRequestFullscreen();
+    } else if (oCanvas.msRequestFullscreen) { /* IE/Edge */
+        oCanvas.msRequestFullscreen();
+    }
+  }
+
+  function exitFullscreen() {
+    if(document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if(document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if(document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+  }
+  
 
 function penActive() {
     oEraser.classList.remove("draw-button-active");
@@ -46,6 +134,17 @@ function eraserActive() {
     oPen.classList.remove("draw-button-active");
     oEraser.classList.add("draw-button-active");
     bDraw = false
+}
+
+function startStop() {
+    bRunning = !bRunning;
+    if (bRunning) {
+        document.getElementById("play").innerText = "pause_circle_outline" 
+
+    } else {
+        document.getElementById("play").innerText = "play_circle_outline" 
+
+    }
 }
 
 oCanvas.addEventListener("click", oEvent => {
@@ -293,6 +392,37 @@ function Field(nWidth, nHeight, oCanvas) {
         return aNeighbours;
     }
 
+    this.createExportData = function() {
+        let data = []
+        for (let i=0; i<oField.nHeight; i++) {
+            for (let j=0; j<oField.nWidth; j++) {
+                data.push(this.aField[i][j])
+            }
+    
+        }
+
+        let last = "";
+        let count = 0;
+        let out = "";
+        data.forEach((el, i) => {
+            if (i === 0) {
+                last = el;
+                count = 1;
+            } else {
+                if (last === el) {
+                    count += 1;
+                } else {
+                    out += `{${count}:${last}}`;
+                    count = 1;
+                    last = el;
+                }
+            }
+        });
+        out += `{${count}:${last}}`;
+
+        return out;
+    }
+
     this.erosion = function() {
         let aNewField = [];
         for (let i=0; i<this.nHeight; i++) {
@@ -325,6 +455,29 @@ function Field(nWidth, nHeight, oCanvas) {
             }
         }
        return aNewField;
+    }
+
+    this.loadExportedData = function(data) {
+        let matches = data.match(/\{.+?\:.+?\}/g);
+        let output = [];
+        matches.forEach(el => {
+            let raw = el.replace(/(^\{|\}$)/g, "");
+            let splits = raw.split(":");
+            let count = parseInt(splits[0]);
+            for (let i=0;i<count;i++) {
+                output.push(parseInt(splits[1]));
+            }
+        });
+
+        let index = -1;
+        for (let i=0; i<this.nHeight; i++) {
+            for (let j=0; j<this.nWidth; j++) {
+                index += 1;
+                this.aField[i][j] = output[index];
+            }
+        }
+        this.draw();
+
     }
 
     this.dilatation = function() {
