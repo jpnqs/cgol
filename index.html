@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conway's Game of Life 🤓</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/icons/favicon.png">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="styles/mobile.css"> -->
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body >
@@ -37,7 +37,7 @@
     </div>
     <div id="gen-out">
         <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
-          child_care
+          child_friendly
           </span>
           
            Generation: </span>
@@ -47,19 +47,19 @@
         <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
           color_lens
           </span> Drawing</span>
-          <button class="expand" onclick="hideDrawing()"><span id="drawing-expand" class="material-icons">
+          <span class="expand" onclick="hideDrawing()"><span id="drawing-expand" class="material-icons">
             expand_less
             </span>
 
-          </button><br>
+          </span><br>
           <div id="drawing-content" class="section-content">
-        <button class="tool" id="pen" class="draw-button draw-button-active" onclick="onclick="activateTool(this, 'pen')><span class="material-icons">
+        <button  id="pen" class="draw-button draw-button-active tool" onclick="activateTool(this, 'PEN')"><span class="material-icons">
           brush
           </span></button>
-        <button  class="tool" id="eraser" class="draw-button" onclick="eraserActive()"><span class="material-icons">
+        <button  id="eraser" class="draw-button" onclick="activateTool(this, 'ERA')"><span class="material-icons">
           crop_portrait
           </span></button>
-        <button class="draw-button" onclick="clearCanvas()"><span class="material-icons">
+        <button class="draw-button tool" onclick="clearCanvas()"><span class="material-icons">
           delete_outline
           </span>
           
@@ -75,12 +75,21 @@
       <div id="template-tools">
         <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
           extension
-          </span> Templates</span><br>
-         <div class="section-content">
-          <button class="full-length tool" onclick="activateTool(this, 'G1')">Glider</button>
-          <button class="full-length tool" onclick="activateTool(this, 'G2')">Light glider</button>
-          <button class="full-length tool" onclick="activateTool(this, 'G3')">Medium glider</button>
-          <button class="full-length tool" onclick="activateTool(this, 'G4')">Heavy glider</button>
+          </span> Templates</span>
+          <span class="expand" onclick="hideTemplateTools()" style="margin-left: 6.5rem;"><span id="template-tool-expand" class="material-icons">
+            expand_less
+            </span>
+
+          </span><br>
+         <div class="section-content" id="template-tool-content">
+          <button class="full-length tool" onclick="activateTool(this, 'G1')" style="margin-top: 0.5rem;">
+            <img src="icons/glider.png" style="height: 1.5rem; margin-right:0.5rem"> Glider</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G2')">
+            <img src="icons/light_glider.png" style="height: 1.5rem; margin-right:0.5rem">Spaceship</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G3')">
+            <img src="icons/porpoise.png" style="height: 1.6rem; margin-right:0.5rem">  Porpoise</button>
+          <button class="full-length tool" onclick="activateTool(this, 'G4')">
+            <img src="icons/f_pentomino.png" style="height: 1.6rem; margin-right:0.5rem">f-Pentomino</button>
 
 
 
@@ -89,8 +98,13 @@
       <div id="import_export-tools">
         <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
           import_export
-          </span> Import/Export</span><br>
-         <div class="section-content">
+          </span> Import/Export</span>
+          <span class="expand"  onclick="hideImportExport()" style="margin-left: 4.15rem;"><span id="import_export-expand" class="material-icons">
+            expand_less
+            </span>
+
+          </span><br>
+         <div class="section-content" id="import_export-content">
 
             <a href="" download="data.cgol" style="vertical-align: middle; margin-top: 0.5rem;"  class="link-button full-length" onclick="exportFile(this)"><span class="material-icons" style="vertical-align: sub; margin-right: 0.5rem">
               get_app

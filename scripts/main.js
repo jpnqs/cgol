@@ -4,6 +4,7 @@ if (!Boolean(window.HTMLCanvasElement)) {
 }
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
+let sActiveTool = "PEN";
 let bRunning = false;
 let bRunningSave = false;
 let bAging = true;
@@ -76,6 +77,21 @@ function uploadAndApplyFile() {
 
 function activateTool(el, tool) {
 
+    let tools = document.getElementsByClassName("tool");
+
+    for(let i=0; i<tools.length; i++) {
+        tools[i].classList.remove("draw-button-active");
+    }
+    sActiveTool = tool;
+    switch (tool) {
+        case 'PEN':
+            penActive()
+            break;
+        case 'ERA':
+            eraserActive()
+            break;
+    }
+    el.classList.add("draw-button-active");
 }
 
 function hideDrawing() {
@@ -87,7 +103,7 @@ function hideDrawing() {
 
             $("#drawing-content").animate({
                 height: "0px"
-            }, 50)
+            }, 250)
 
     } else {
         window.drawingContentOpen = false;
@@ -95,10 +111,51 @@ function hideDrawing() {
         $("#drawing-expand").text("expand_less")
         $("#drawing-content").animate({
             height: "13rem"
-        }, 50)
+        }, 250)
 
     }
 
+}
+
+function hideImportExport() {
+    if (!window.importExportContentOpen) {
+        window.importExportContentOpen = true; 
+        $("#import_export-expand").text("expand_more")
+
+            $("#import_export-content").animate({
+                height: "0px"
+            }, 250)
+
+    } else {
+        window.importExportContentOpen = false;
+        // cont.style.display = "block";
+        $("#import_export-expand").text("expand_less")
+        $("#import_export-content").animate({
+            height: "13rem"
+        }, 250)
+
+    }
+
+}
+
+function hideTemplateTools() {
+    if (!window.toolsContentOpen) {
+        window.toolsContentOpen = true; 
+        $("#template-tool-expand").text("expand_more")
+
+            $("#template-tool-content").animate({
+                height: "0px"
+            }, 250)
+
+    } else {
+        window.toolsContentOpen = false;
+        // cont.style.display = "block";
+        $("#template-tool-expand").text("expand_less")
+        $("#template-tool-content").animate({
+            height: "13rem"
+        }, 250)
+
+    }
 }
 
 function openFullscreen() {
@@ -147,20 +204,167 @@ function startStop() {
     }
 }
 
-oCanvas.addEventListener("click", oEvent => {
+function drawWithTool(oEvent, click) {
     let width = getComputedStyle(oCanvas).width;
     let div = width.substring(0, width.length - 2) / 100;
-    let x = Math.floor( oEvent.offsetX / div );
-    let y = Math.floor( oEvent.offsetY / div );
-    try {
-        if (bDraw) {
+    if (bMouseDown || click) {
+        let x = Math.floor( oEvent.offsetX / div );
+        let y = Math.floor( oEvent.offsetY / div );
+        if (sActiveTool == "PEN" || sActiveTool == "ERA") {
+            try {
+                if (bDraw) {
+                    oField.aField[x][y] = 1;
+                } else {
+                    oField.aField[x][y] = 0;
+                }
+            oField.draw();
+        
+            } catch (err) {}
+        } else if (sActiveTool == "G1" && click) {
             oField.aField[x][y] = 1;
-        } else {
-            oField.aField[x][y] = 0;
-        }
-    oField.draw();
+            oField.aField[x + 1][y + 1] = 1;
+            oField.aField[x + 2][y + 1] = 1;
+            oField.aField[x + 2][y] = 1;
+            oField.aField[x + 2][y - 1] = 1
+            // oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+            // oField.oContext.fillRect((x + 1) * 6, (y + 1) * 6, 6, 6);
+            // oField.oContext.fillRect((x + 2) * 6, (y + 1) * 6, 6, 6);
+            // oField.oContext.fillRect((x + 2) * 6, (y) * 6, 6, 6);
+            // oField.oContext.fillRect((x + 2) * 6, (y - 1) * 6, 6, 6);
+        } else if (sActiveTool == "G2" && click) {
+            const setXY = (x, y) => oField.aField[x][y] = 1;
+            setXY(x, y);
+            setXY(x + 3, y);
+            setXY(x + 4, y - 1);
+            setXY(x + 4, y - 2);
+            setXY(x + 4, y - 3);
+            setXY(x + 3, y - 3);
+            setXY(x + 2, y - 3);
+            setXY(x + 1, y - 3);
+            setXY(x, y - 2);
+        } else if (sActiveTool == "G3" && click) {
+            const setXY = (x, y) => oField.aField[x][y] = 1;
 
-    } catch (err) {}
+            setXY(x + 1, y);
+            setXY(x, y + 1);
+            setXY(x, y + 2);
+            setXY(x + 2, y + 1);
+            setXY(x + 3, y + 2);
+            setXY(x + 2, y + 3);
+            setXY(x + 2, y + 4);
+            setXY(x + 3, y + 4);
+            setXY(x + 5, y + 4);
+            setXY(x + 6, y + 4);
+            setXY(x + 6, y + 3);
+            setXY(x + 5, y + 2);
+            setXY(x + 6, y + 1);
+            setXY(x + 7, y);
+            setXY(x + 8, y + 1);
+            setXY(x + 8, y + 2);
+        } else if (sActiveTool == "G4" && click) {
+            const setXY = (x, y) => oField.aField[x][y] = 1;
+
+            setXY(x, y + 1);
+            setXY(x + 1, y + 1);
+            setXY(x + 1, y + 2);
+            setXY(x + 1, y);
+            setXY(x + 2, y);
+
+        }
+    } else {
+        let x = Math.floor( oEvent.offsetX / div );
+        let y = Math.floor( oEvent.offsetY / div );
+        if (sActiveTool == "PEN" || sActiveTool == "ERA") {
+            try {
+                oField.draw();
+                    oField.oContext.fillStyle = "gray";
+                    oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+            // 
+        
+            } catch (err) {}
+
+        } else if (sActiveTool == "G1") {
+            oField.draw();
+            oField.oContext.fillStyle = "gray";
+            oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+            oField.oContext.fillRect((x + 1) * 6, (y + 1) * 6, 6, 6);
+            oField.oContext.fillRect((x + 2) * 6, (y + 1) * 6, 6, 6);
+            oField.oContext.fillRect((x + 2) * 6, (y) * 6, 6, 6);
+            oField.oContext.fillRect((x + 2) * 6, (y - 1) * 6, 6, 6);
+
+
+
+        } else if (sActiveTool == "G2") {
+            const drawXY = (x,y) => oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+
+            oField.draw();
+            oField.oContext.fillStyle = "gray";
+            drawXY(x, y);
+            drawXY(x + 3, y);
+            drawXY(x + 4, y - 1);
+            drawXY(x + 4, y - 2);
+            drawXY(x + 4, y - 3);
+            drawXY(x + 3, y - 3);
+            drawXY(x + 2, y - 3);
+            drawXY(x + 1, y - 3);
+            drawXY(x, y - 2);
+        } else if (sActiveTool == "G3") {
+            const drawXY = (x,y) => oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+
+            oField.draw();
+            oField.oContext.fillStyle = "gray";
+            drawXY(x + 1, y);
+            drawXY(x, y + 1);
+            drawXY(x, y + 2);
+            drawXY(x + 2, y + 1);
+            drawXY(x + 3, y + 2);
+            drawXY(x + 2, y + 3);
+            drawXY(x + 2, y + 4);
+            drawXY(x + 3, y + 4);
+            drawXY(x + 5, y + 4);
+            drawXY(x + 6, y + 4);
+            drawXY(x + 6, y + 3);
+            drawXY(x + 5, y + 2);
+            drawXY(x + 6, y + 1);
+            drawXY(x + 7, y);
+            drawXY(x + 8, y + 1);
+            drawXY(x + 8, y + 2);
+
+        } else if (sActiveTool == "G4") {
+            const drawXY = (x,y) => oField.oContext.fillRect(x * 6, y * 6, 6, 6);
+
+            oField.draw();
+            oField.oContext.fillStyle = "gray";
+
+            drawXY(x, y + 1);
+            drawXY(x + 1, y + 1);
+            drawXY(x + 1, y + 2);
+            drawXY(x + 1, y);
+            drawXY(x + 2, y);
+
+
+
+
+        }
+            
+    }
+}
+
+oCanvas.addEventListener("click", oEvent => {
+    // let width = getComputedStyle(oCanvas).width;
+    // let div = width.substring(0, width.length - 2) / 100;
+    // let x = Math.floor( oEvent.offsetX / div );
+    // let y = Math.floor( oEvent.offsetY / div );
+    // try {
+    //     if (bDraw) {
+    //         oField.aField[x][y] = 1;
+    //     } else {
+    //         oField.aField[x][y] = 0;
+    //     }
+    // oField.draw();
+
+    // } catch (err) {}
+    drawWithTool(oEvent, true);
 });
 
 oCanvas.addEventListener("mousedown", () => {
@@ -191,31 +395,7 @@ oCanvas.addEventListener("touchmove", (oEvent) => {
 })
 
 oCanvas.addEventListener("mousemove", (oEvent) => {
-    let width = getComputedStyle(oCanvas).width;
-    let div = width.substring(0, width.length - 2) / 100;
-    if (bMouseDown) {
-        let x = Math.floor( oEvent.offsetX / div );
-        let y = Math.floor( oEvent.offsetY / div );
-        try {
-            if (bDraw) {
-                oField.aField[x][y] = 1;
-            } else {
-                oField.aField[x][y] = 0;
-            }
-        oField.draw();
-    
-        } catch (err) {}
-    } else {
-        let x = Math.floor( oEvent.offsetX / div );
-        let y = Math.floor( oEvent.offsetY / div );
-        try {
-            oField.draw();
-                oField.oContext.fillStyle = "gray";
-                oField.oContext.fillRect(x * 6, y * 6, 6, 6);
-        // 
-    
-        } catch (err) {}
-    }
+    drawWithTool(oEvent);
 });
 
 function probability(val) {

@@ -94,7 +94,6 @@ body {
 }
 
 .section-content {
-  transition: 1s;
   overflow: hidden;
 }
 
@@ -119,10 +118,20 @@ button:hover, .link-button:hover {
     color: #333;
 }
 
+button:hover > img {
+  filter: invert(1);
+}
+
 button:active, .link-button:active {
   color: #f8f8f8;
   background-color: var(--color);
+
 }
+
+button:active > img {
+  filter: invert(0);
+}
+
 #runner {
     /* border-bottom-right-radius: 0.7rem; */
     margin-left: -4px;
@@ -351,10 +360,12 @@ span {
 }
 
 .expand {
+  cursor: pointer;
   margin-left: 7.5rem;
-  padding-bottom: 0.5rem;
-  border-radius: 0.5rem;
-  background-color: #00000000;
+  width: 1rem;
+  /* padding-bottom: 0.5rem; */
+  /* border-radius: 0.5rem; */
+  /* background-color: #ddc8c800; */
   transition: 0.3s;
 }
 
@@ -369,6 +380,6 @@ span {
 }
 
 .expand > span {
-  display:block;
+  vertical-align: bottom;
   
 }
