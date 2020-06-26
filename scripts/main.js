@@ -447,7 +447,7 @@ updateGen();
 
 
 function updateGen() {
-    oGen.innerText = nGeneration;
+    oGen.innerText = nGeneration.toLocaleString();
 }
 
 function worker() {
@@ -803,8 +803,6 @@ function Field(nWidth, nHeight, oCanvas) {
                 }
             }
         }
-        // this.drawGrid();
-        // drawGrid(this.oCanvas);
     }
 
 
