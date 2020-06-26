@@ -13,6 +13,7 @@
     <div class="control-container">
     <button id="retry" onclick="regenerate()" title="regenerate field"> <i class="material-icons" style="font-size: 22pt; margin-top:0.4rem">settings_backup_restore</i> </button>
     <button id="runner" onclick="startStop()" title="start/stop the evolution"><i id="play" class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">play_circle_outline</i> </button><br>
+    <div class="side-scroll-container">
     <label class="container" title="The entities dies after several moments by aging">Entity aging 
         <input type="checkbox" checked="true" onchange="bAging = this.checked">
         <span class="checkmark"></span>
@@ -119,7 +120,9 @@
         </div>
       </div>
       <br>
+      </div>
     </div>
+
     <div id="canvasContainer">
       <canvas id="canvas" height="600px" width="600px" style="height: 80%"></canvas>
         <a class="a" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" title="What is Conway's Game of Life?"><span style="font-size: 24pt;margin-top: 0.25rem;" class="material-icons">

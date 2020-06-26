@@ -803,6 +803,30 @@ function Field(nWidth, nHeight, oCanvas) {
                 }
             }
         }
+        // this.drawGrid();
+        // drawGrid(this.oCanvas);
     }
 
+
+
+}
+
+
+ function drawGrid(canv){
+    var p = 0;
+    var ctx = canv.getContext("2d");
+    var bw = canv.width;
+    var bh = canv.height;
+
+    for (var x = 0; x <= bw; x += 6) {
+        ctx.moveTo(0.5 + x + p, p);
+        ctx.lineTo(0.5 + x + p, bh + p);
+    }
+
+    for (var x = 0; x <= bh; x += 6) {
+        ctx.moveTo(p, 0.5 + x + p);
+        ctx.lineTo(bw + p, 0.5 + x + p);
+    }
+    ctx.strokeStyle = "#eaeaea"
+    ctx.stroke();
 }
