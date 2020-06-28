@@ -877,9 +877,16 @@ function Field(nWidth, nHeight, oCanvas) {
 function openCloseMobileSettings() {
     var cc = document.getElementById("cc");
     if (cc.classList.contains("openWidth")) {
+        setTimeout(() => {
+            $("#veil").animate({
+                opacity: "0.8"
+            })
+        }, 0);
         cc.classList.remove("openWidth");
     } else {
         startStop(false);
         cc.classList.add("openWidth");
     }
 }
+
+hideSettingsTools()
