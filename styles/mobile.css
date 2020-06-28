@@ -44,4 +44,9 @@
     width: 30%;
   }
 
+  #canvas {
+    height: auto !important;
+    width: 100% !important;
+  }
+
 }
