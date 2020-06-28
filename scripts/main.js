@@ -2,6 +2,13 @@ if (!Boolean(window.HTMLCanvasElement)) {
     alert("Your'e browser does not support this application!");
     throw new Error("No canvas support");
 }
+
+let color = localStorage.getItem("color") || "#be0000"
+if (color) {
+    document.documentElement.style.setProperty('--color', color);
+    document.getElementById("colorPicker").value = color;
+}
+
 let oCanvas = document.getElementById("canvas");
 let oGen = document.getElementById("generation");
 let sActiveTool = "PEN";
@@ -43,6 +50,9 @@ function exportFile(el) {
 document.onkeypress = function(ev) {
     if (ev.code == "Space") {
         $("#runner").click()
+    } 
+    else if (ev.code == "KeyR") {
+        $("#retry").click();
     }
     else if (ev.code == "KeyF") {
         if((window.fullScreen) ||
@@ -131,7 +141,7 @@ function hideImportExport() {
         // cont.style.display = "block";
         $("#import_export-expand").text("expand_less")
         $("#import_export-content").animate({
-            height: "13rem"
+            height: "10rem"
         }, 250)
 
     }
@@ -157,6 +167,33 @@ function hideTemplateTools() {
 
     }
 }
+
+function hideSettingsTools() {
+    if (!window.toolsSettingsOpen) {
+        window.toolsSettingsOpen = true; 
+        $("#setting-tool-expand").text("expand_more")
+
+            $("#setting-tool-content").animate({
+                height: "0px"
+            }, 250)
+
+    } else {
+        window.toolsSettingsOpen = false;
+        // cont.style.display = "block";
+        $("#setting-tool-expand").text("expand_less")
+        $("#setting-tool-content").animate({
+            height: "13rem"
+        }, 250)
+
+    }
+}
+
+var colorPicker = document.getElementById("colorPicker");
+
+colorPicker.addEventListener("change", () => {
+    document.documentElement.style.setProperty('--color', colorPicker.value);
+    window.localStorage.setItem("color", colorPicker.value);
+})
 
 function openFullscreen() {
     if (oCanvas.requestFullscreen) {
@@ -193,8 +230,13 @@ function eraserActive() {
     bDraw = false
 }
 
-function startStop() {
-    bRunning = !bRunning;
+function startStop(bool = undefined) {
+    if (bool == undefined) {
+        bRunning = !bRunning;
+
+    } else {
+        bRunning = bool;
+    }
     if (bRunning) {
         document.getElementById("play").innerText = "pause_circle_outline" 
 
@@ -409,7 +451,7 @@ function probability(val) {
 function regenerate() {
     nGeneration = 0;
     updateGen();
-    bRunning = false;
+    startStop(false);
 
     oField = new Field(100, 100, oCanvas);
 
@@ -827,4 +869,13 @@ function Field(nWidth, nHeight, oCanvas) {
     }
     ctx.strokeStyle = "#eaeaea"
     ctx.stroke();
+}
+
+function openCloseMobileSettings() {
+    var cc = document.getElementById("cc");
+    if (cc.classList.contains("openWidth")) {
+        cc.classList.remove("openWidth");
+    } else {
+        cc.classList.add("openWidth");
+    }
 }

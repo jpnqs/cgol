@@ -1,0 +1,20 @@
+@media only screen
+  and (orientation: landscape) {
+    
+    .control-container {
+        width: 18.97rem;
+    }
+
+    #canvasContainer {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        height: 100%;
+        width:  calc(100% - 18.97rem);
+    }
+
+    .mobileOnly {
+        display:none;
+    }
+
+}

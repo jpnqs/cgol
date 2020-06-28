@@ -1,5 +1,5 @@
 :root {
-  --color: rgb(190, 0, 0);
+  --color: #333;
 }
 
 
@@ -59,13 +59,7 @@ body {
   width:fit-content
 }
 
-#canvasContainer {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 100%;
-  width:  calc(100% - 18.97rem);
-}
+
 
 #canvas {
     position: absolute;
@@ -81,7 +75,7 @@ body {
     cursor: pointer;
 }
 
-#drawing-tools, #import_export-tools, #template-tools {
+#drawing-tools, #import_export-tools, #template-tools, #setting-tools {
   margin-top: 0.8rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-size: 16pt;
@@ -249,10 +243,11 @@ transition: 0.1s;
   }
 
 .control-container {
+  overflow:hidden;
+    transition: 0.25s;
     color: #f8f8f8;
     background-color: #191d1f;
     overflow-y: hidden;
-    width: 18.97rem;
     height: 100%;
     border-style: solid;
     border-color: #00000000;
@@ -387,4 +382,21 @@ span {
 .side-scroll-container {
   height: calc(100% - 3.6rem);
   overflow-y: scroll;
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: none;
+	width: 32px;
+	height: 32px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: none;
+}
+
+.openWidth {
+  width: 85% !important;
 }
