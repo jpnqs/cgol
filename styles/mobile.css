@@ -22,4 +22,26 @@
       display:none;
     }
 
+    #runner {
+      /* border-bottom-right-radius: 0.7rem; */
+      margin-left: -4px;
+      width: 40%;
+      border-right-style: solid;
+      border-right-width: 0.1rem;
+      border-right-color: #0f1113;
+  }
+  
+  #retry {
+      border-right-style: solid;
+      border-right-width: 0.1rem;
+      border-right-color: #0f1113;
+      width: 30%;
+  }
+
+  #closeMobileModal {
+    margin-left: -4px;
+
+    width: 30%;
+  }
+
 }

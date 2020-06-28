@@ -15,7 +15,8 @@
 <body>
     <div class="control-container" id="cc">
     <button id="retry" onclick="regenerate()" title="regenerate field (R)"> <i class="material-icons" style="font-size: 22pt; margin-top:0.4rem">autorenew</i> </button>
-    <button id="runner" onclick="startStop()" title="start/stop evolution (Space)"><i id="play" class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">play_circle_outline</i> </button><br>
+    <button id="runner" onclick="startStop()" title="start/stop evolution (Space)"><i id="play" class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">play_circle_outline</i> </button>
+    <button id="closeMobileModal" class="mobileOnly" onclick="openCloseMobileSettings()"><i class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">close</i></button><br>
     <div class="side-scroll-container">
     <label class="container" title="The entities dies after several moments by aging">Entity aging 
         <input type="checkbox" checked="true" onchange="bAging = this.checked">
@@ -141,13 +142,13 @@
       </div>
     </div>
     <div id="canvasContainer">
-      <div class="mobileOnly">
-        <button onclick="openCloseMobileSettings()">
-          <span class="material-icons" style="font-size: 28pt;">
+      <div class="mobileHeader mobileOnly">
+        <button id="modalOpen" onclick="openCloseMobileSettings()">
+          <span class="material-icons" style="font-size: 28pt;    vertical-align: sub;">
             menu
           </span>
         </button>
-
+        <span class="mobileHeaderText">Game of Life</span>
       </div>
       <canvas id="canvas" height="600px" width="600px" style="height: 80%"></canvas>
         <a class="a desktopOnly" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" title="What is Conway's Game of Life?"><span style="font-size: 24pt;margin-top: 0.25rem;" class="material-icons">
