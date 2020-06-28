@@ -877,13 +877,19 @@ function Field(nWidth, nHeight, oCanvas) {
 function openCloseMobileSettings() {
     var cc = document.getElementById("cc");
     if (cc.classList.contains("openWidth")) {
-        setTimeout(() => {
-            $("#veil").animate({
-                opacity: "0.8"
-            })
-        }, 0);
+        $("#veil").animate({
+            opacity: "0"
+        }, "fast", () =>  $("#veil").css({
+            display: "none"
+        }))
         cc.classList.remove("openWidth");
     } else {
+        $("#veil").css({
+            display: "block"
+        })
+        $("#veil").animate({
+            opacity: "0.8"
+        }, "fast")
         startStop(false);
         cc.classList.add("openWidth");
     }
