@@ -238,6 +238,9 @@ function startStop(bool = undefined) {
         bRunning = bool;
     }
     if (bRunning) {
+        if (potrait.matches) {
+            openCloseMobileSettings();
+        }
         document.getElementById("play").innerText = "pause_circle_outline" 
 
     } else {
@@ -876,6 +879,7 @@ function openCloseMobileSettings() {
     if (cc.classList.contains("openWidth")) {
         cc.classList.remove("openWidth");
     } else {
+        startStop(false);
         cc.classList.add("openWidth");
     }
 }
