@@ -45,19 +45,7 @@
           </span>
            Generation: </span>
         <span id="generation"></span><br>
-        <!-- <span><span class="material-icons" style="vertical-align: bottom;">
-          fiber_new
-          </span>
-          New:
-          </span>
-          <span><span class="material-icons" style="margin-left:2.5rem; vertical-align: bottom;">
-            close
-            </span>
-            Passed:
-            </span><br>
-            <span>
-              <span>5000</span>
-            </span> -->
+
     </div>
       <div id="drawing-tools">
         <span><span class="material-icons" style="vertical-align: bottom; margin-right: 0.25rem">
@@ -149,6 +137,26 @@
           </span>
         </button>
         <span class="mobileHeaderText">Game of Life</span>
+        <button id="play-mobile" onclick="startStop()">
+          <i id="play-mobile-content" class="material-icons"  style="font-size: 22pt; margin-top:0.4rem">play_circle_outline</i>
+        </button>
+      </div>
+      <div class="mobileFooter mobileOnly" style="width:fit-content;height:fit-content;margin:auto;">
+        <button style="border-top-left-radius: 0.5rem;border-bottom-left-radius: 0.5rem;"><span class="material-icons">
+          brush
+          </span></button>
+        <button>
+          <img src="icons/glider.png" style="height: 1.5rem; margin-right:0.5rem"></button>
+
+        </button>
+        <button>
+          <img src="icons/light_glider.png" style="height: 1.5rem; margin-right:0.5rem"></button>
+
+        </button>
+        <button style="border-top-right-radius: 0.5rem;border-bottom-right-radius: 0.5rem;">
+          <img src="icons/porpoise.png" style="height: 1.6rem; margin-right:0.5rem"> </button>
+
+        </button>
       </div>
       <canvas id="canvas" height="600px" width="600px" style="height: 80%"></canvas>
         <a class="a desktopOnly" href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" title="What is Conway's Game of Life?"><span style="font-size: 24pt;margin-top: 0.25rem;" class="material-icons">

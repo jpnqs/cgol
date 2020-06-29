@@ -238,14 +238,15 @@ function startStop(bool = undefined) {
         bRunning = bool;
     }
     if (bRunning) {
-        if (potrait.matches) {
+        if (potrait.matches && document.getElementById("veil").style.opacity > 0) {
             openCloseMobileSettings();
         }
         document.getElementById("play").innerText = "pause_circle_outline" 
+        document.getElementById("play-mobile-content").innerText = "pause_circle_outline" 
 
     } else {
         document.getElementById("play").innerText = "play_circle_outline" 
-
+        document.getElementById("play-mobile-content").innerText = "play_circle_outline" 
     }
 }
 

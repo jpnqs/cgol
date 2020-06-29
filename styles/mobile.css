@@ -49,4 +49,46 @@
     width: 100% !important;
   }
 
+  #play-mobile {
+    width: 4rem;
+    position: absolute;
+    right: 0px;
+  }
+
+  .mobileFooter {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+    z-index: 1;
+    bottom: 5%;
+    background-color: #0f1113;
+    border-radius: 0.5rem;
+  }
+
+  .mobileFooter > button {
+    font-size: 26pt;
+    width: 4rem;
+    margin: 0px;
+  }
+
+  .mobileFooter::first-child {
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+
+  }
+
+  
+  .mobileFooter::last-child {
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+
+  }
+
+
 }
