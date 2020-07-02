@@ -3,6 +3,8 @@ if (!Boolean(window.HTMLCanvasElement)) {
     throw new Error("No canvas support");
 }
 
+$(document.body).css({opacity: 0})
+
 let color = localStorage.getItem("color") || "#be0000"
 if (color) {
     document.documentElement.style.setProperty('--color', color);
@@ -27,11 +29,15 @@ var oField = new Field(100, 100, oCanvas);
 let oProbOut = document.getElementById("prob-out");
 
 window.onload = () => {
+    
     $("#glider").click();
     $("#porpoise").click();
     $("#f_pentomino").click()
     $("#pen").click();
 
+    setTimeout(() => {
+        $(document.body).animate({opacity: 1}, "fast")
+    }, 100);
 }
 
 for (let i=0;i<oField.aField.length;i++) {
