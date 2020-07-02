@@ -26,7 +26,13 @@ let bMouseDown = false;
 var oField = new Field(100, 100, oCanvas);
 let oProbOut = document.getElementById("prob-out");
 
+window.onload = () => {
+    $("#glider").click();
+    $("#porpoise").click();
+    $("#f_pentomino").click()
+    $("#pen").click();
 
+}
 
 for (let i=0;i<oField.aField.length;i++) {
     let aRow = oField.aField[i];
@@ -133,18 +139,7 @@ function hideDrawing() {
 
 }
 
-addUsedTool({
-    icon: location.origin + "/icons/glider.png",
-    button: document.getElementById("glider")
-})
-addUsedTool({
-    icon: location.origin + "/icons/porpoise.png",
-    button: document.getElementById("porpoise")
-})
-addUsedTool({
-    icon: location.origin + "/icons/f_pentomino.png",
-    button: document.getElementById("f_pentomino")
-})
+
 
 function addUsedTool({icon, button}) {
     if (icon === undefined || undefined !== aLastUsedTools.find(el => el.icon == icon)) {
