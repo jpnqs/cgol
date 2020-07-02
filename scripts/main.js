@@ -20,11 +20,13 @@ let nAutoRetry = 500;
 let nGeneration = 0;
 let bAutoRetry = false;
 let nGenerationPercentage = 31;
-
+let aLastUsedTools = [];
 let bDraw = true;
 let bMouseDown = false;
 var oField = new Field(100, 100, oCanvas);
 let oProbOut = document.getElementById("prob-out");
+
+
 
 for (let i=0;i<oField.aField.length;i++) {
     let aRow = oField.aField[i];
@@ -101,6 +103,10 @@ function activateTool(el, tool) {
             eraserActive()
             break;
     }
+    addUsedTool({
+        button: el,
+        icon: el.children[0].src
+    });
     el.classList.add("draw-button-active");
 }
 
@@ -125,6 +131,54 @@ function hideDrawing() {
 
     }
 
+}
+
+addUsedTool({
+    icon: location.origin + "/icons/glider.png",
+    button: document.getElementById("glider")
+})
+addUsedTool({
+    icon: location.origin + "/icons/porpoise.png",
+    button: document.getElementById("porpoise")
+})
+addUsedTool({
+    icon: location.origin + "/icons/f_pentomino.png",
+    button: document.getElementById("f_pentomino")
+})
+
+function addUsedTool({icon, button}) {
+    if (icon === undefined || undefined !== aLastUsedTools.find(el => el.icon == icon)) {
+        return;
+    }
+    let over = false
+    if (aLastUsedTools.length >= 3) {
+        aLastUsedTools.shift();
+        over = true;
+    }
+    
+    if (over) {
+        aLastUsedTools.push({
+            icon: icon,
+            button: button
+        })
+    } else {
+        aLastUsedTools.unshift({
+            icon: icon,
+            button: button
+        })
+
+    }
+
+    aLastUsedTools.forEach((obj, i) => {
+        let o = document.getElementById("quick-" + i);
+        o.children[0].src = obj.icon;
+    });
+
+}
+
+function clickUsedTool(id) {
+    let tool = aLastUsedTools[id];
+    $(tool.button).click();
 }
 
 function hideImportExport() {

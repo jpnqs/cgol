@@ -80,13 +80,13 @@
             </span>
           </span><br>
          <div class="section-content" id="template-tool-content">
-          <button class="full-length tool" onclick="activateTool(this, 'G1')" style="margin-top: 0.5rem;">
+          <button id="glider" class="full-length tool" onclick="activateTool(this, 'G1')" style="margin-top: 0.5rem;">
             <img src="icons/glider.png" style="height: 1.5rem; margin-right:0.5rem"> Glider</button>
           <button class="full-length tool" onclick="activateTool(this, 'G2')">
             <img src="icons/light_glider.png" style="height: 1.5rem; margin-right:0.5rem">Spaceship</button>
-          <button class="full-length tool" onclick="activateTool(this, 'G3')">
+          <button id="porpoise" class="full-length tool" onclick="activateTool(this, 'G3')">
             <img src="icons/porpoise.png" style="height: 1.6rem; margin-right:0.5rem">  Porpoise</button>
-          <button class="full-length tool" onclick="activateTool(this, 'G4')">
+          <button id="f_pentomino" class="full-length tool" onclick="activateTool(this, 'G4')">
             <img src="icons/f_pentomino.png" style="height: 1.6rem; margin-right:0.5rem">f-Pentomino</button>
         </div>
       </div>
@@ -142,19 +142,19 @@
         </button>
       </div>
       <div class="mobileFooter mobileOnly" style="width:fit-content;height:fit-content;margin:auto;">
-        <button style="border-top-left-radius: 0.5rem;border-bottom-left-radius: 0.5rem;"><span class="material-icons">
+        <button style="border-top-left-radius: 0.5rem;border-bottom-left-radius: 0.5rem;" onclick="activateTool(this, 'PEN')"><span class="material-icons">
           brush
           </span></button>
-        <button>
-          <img src="icons/glider.png" style="height: 1.5rem; margin-right:0.5rem"></button>
+        <button id="quick-0" onclick="clickUsedTool(0)">
+          <img src="" style="height: 1.5rem; margin-right:0.5rem"></button>
 
         </button>
-        <button>
-          <img src="icons/light_glider.png" style="height: 1.5rem; margin-right:0.5rem"></button>
+        <button id="quick-1" onclick="clickUsedTool(1)">
+          <img src="" style="height: 1.5rem; margin-right:0.5rem"></button>
 
         </button>
-        <button style="border-top-right-radius: 0.5rem;border-bottom-right-radius: 0.5rem;">
-          <img src="icons/porpoise.png" style="height: 1.6rem; margin-right:0.5rem"> </button>
+        <button id="quick-2" onclick="clickUsedTool(2)" style="border-top-right-radius: 0.5rem;border-bottom-right-radius: 0.5rem;">
+          <img src="" style="height: 1.6rem; margin-right:0.5rem"> </button>
 
         </button>
       </div>
